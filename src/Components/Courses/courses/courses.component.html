@@ -1,0 +1,30 @@
+<h6>courses</h6>
+<mat-list>
+ @for(course of (this.apiCourse.Courses$|async);track course.id)
+{
+   @if(this.user?.role=='teacher')
+   {     
+      <button (click)="addCourse(course)" [innerHTML]="'עריכה'|textToIcon"style="height: 30px;" ></button>
+      <button (click)="ToPopUp(course.id||0,'האם אתה בטוח שברצונך למחוק קורס זה',1)" [innerHTML]="'מחיקה'|textToIcon" style="height: 30px;"></button>     
+   }
+@else {
+   <button (click)="ToPopUp(course.id||0,'האם אתה בטוח שברצונך להצטרף לקורס זה',2)" [innerHTML]="'join'|textToIcon" style="height: 30px;"></button>     
+   <button (click)="ToPopUp(course.id||0,'האם אתה בטוח שברצונך לעזוב קורס זה',3)" [innerHTML]="'leave'|textToIcon" style="height: 30px;"></button>     
+
+}
+   
+      <mat-list-item style="background-color: rgb(200, 150, 135);">
+         <span matListItemTitle><a [routerLink]="['/course', Course?.id||0]">{{course.title+"-   "+course.description}}</a></span>
+       </mat-list-item>
+   
+} 
+@if(this.user?.role=='teacher')
+   {
+      <button (click)="edit=true">add Course</button>
+   }
+@if(edit==true){
+   <app-edit-course [course]="this.Course" ></app-edit-course>}  
+@if(showPopUp==true){
+   <app-pop-up [text]="textShow"  (buttonClickNo)="closePopUp()" (buttonClickYes)="funcPopup()"></app-pop-up>}
+</mat-list>
+<router-outlet></router-outlet>

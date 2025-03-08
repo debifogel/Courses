@@ -1,0 +1,46 @@
+
+
+
+  <form [formGroup]="lessonForm" (ngSubmit)="onSubmit()">
+    <mat-grid-list cols="1" rowHeight="100px">
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>Course Title</mat-label>
+          <input matInput id="courseTitle" formControlName="courseTitle">
+        </mat-form-field>
+      </mat-grid-tile>
+  
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>Course Description</mat-label>
+          <input matInput id="courseDescription" formControlName="courseDescription">
+        </mat-form-field>
+      </mat-grid-tile>
+  
+      <div formArrayName="lessons">
+        @for( lesson of lessonsArray.controls;track $index;let i = $index){
+        <div  [formGroupName]="i">
+          <mat-grid-tile>
+            <mat-form-field appearance="fill">
+              <mat-label>Lesson Title</mat-label>
+              <input matInput id="lessonTitle" formControlName="lessonTitle">
+            </mat-form-field>
+          </mat-grid-tile>
+  
+          <mat-grid-tile>
+            <mat-form-field appearance="fill">
+              <mat-label>Lesson Content</mat-label>
+              <input matInput id="lessonContent" formControlName="lessonContent">
+            </mat-form-field>
+          </mat-grid-tile>
+        </div>
+      }
+      </div>
+  
+      <mat-grid-tile>
+        <button mat-raised-button color="primary" type="button" (click)="addLessonFields()">Add Another Lesson</button>
+        <button mat-raised-button color="accent" type="submit" [disabled]="lessonForm.invalid">Add this Course</button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+  

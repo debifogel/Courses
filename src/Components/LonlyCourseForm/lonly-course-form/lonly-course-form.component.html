@@ -1,0 +1,16 @@
+<h6>פרטי הקורס</h6>
+@for( lesson of lessons;track lesson.id)
+{
+    @if(this.user?.role=='teacher')
+   {     
+      <button (click)="ToPopUp(lesson.id||0)" [innerHTML]="'מחיקה'|textToIcon" style="height: 30px;"></button>     
+   }
+  <mat-list>
+    <mat-list-item>
+      <span mat-line>{{lesson.title}}</span>
+      <span mat-line>{{lesson.content}}</span>
+    </mat-list-item>
+  </mat-list>
+}
+@if(showPopUp==true){
+    <app-pop-up [text]="this.textToShow"  (buttonClickNo)="closePopUp()" (buttonClickYes)="deleteLesson()"></app-pop-up>}
