@@ -6,8 +6,15 @@ import { Icon } from '../../Models/icon';
   standalone: true
 })
 export class TextToIconPipe implements PipeTransform {
-  iconsList: Icon[] = [new Icon(1,"עריכה",'fas fa-pen'), new Icon(2,"מחיקה",'fas fa-trash-alt'),
-    new Icon(3,"smile",'far fa-smile'),new Icon(4,"frown", 'far fa-frown'),new Icon(5,"arrows" ,'fas fa-arrows-alt'),new Icon(6,"join" ,'fas fa-user-plus'),new Icon(7,"leave" ,'fas fa-user-minus')];
+   iconsList: Icon[] = [
+    new Icon(1, "עריכה", 'fa fa-pencil'),          // Edit icon
+    new Icon(2, "מחיקה", 'fa fa-trash'),           // Trash icon
+    new Icon(3, "smile", 'far fa-smile'),           // Smile icon
+    new Icon(4, "frown", 'far fa-frown'),           // Frown icon
+    new Icon(5, "arrows", 'fas fa-arrows-alt'),     // Arrows icon
+    new Icon(6, "join", 'fa fa-user-plus'),        // User plus icon
+    new Icon(7, "leave", 'fa fa-user-times')       // User minus icon
+];
   transform(value: string) {
     
     

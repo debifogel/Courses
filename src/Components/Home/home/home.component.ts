@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ButtonToenterComponent } from '../../ButtonToenter/button-toenter/button-toenter.component';
 import { ButtonLogComponent } from "../../ButtonLog/button-log/button-log.component";
 import { ButtonRegisterComponent } from "../../ButtonRegister/button-register/button-register.component";

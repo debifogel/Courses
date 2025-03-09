@@ -10,8 +10,7 @@ import { EditCourseComponent } from "../../EditCourse/edit-course/edit-course.co
 import { Lesson } from '../../../Models/Lesson';
 import { LessonServiceService } from '../../../Service/Lesson/lesson-service.service';
 import { PopUpComponent } from "../../PopUp/pop-up/pop-up.component";
-import { tap } from 'rxjs';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-courses',
@@ -26,24 +25,37 @@ export class CoursesComponent implements OnInit {
   Course?:Course;
   Lesson?:Lesson[];
    i:number=0
-constructor( public apiCourse:CoursesServiceService,public userService:UserService,public lessonServ:LessonServiceService,private userSite:UserService){}
+   MyCourses:Course[]=[]
+
+constructor( public apiCourse:CoursesServiceService,public userService:UserService
+  ,public lessonServ:LessonServiceService,private userSite:UserService,private router:Router){}
 ngOnInit() {
   // מאזינים לשינויים במשתמש
   this.userService.user$.subscribe(user => {
     this.user = user;
   });
-  this.userSite.user$.pipe(tap(u=>{ this.i= (u?.userId||0)}))
+  this.userSite.user$.subscribe(u=>{ 
+    this.i= (u?.userId||0)
+     this.GetMyCourses()})
+
+}
+GetMyCourses()
+{
+  this.apiCourse.getCoursesByUserId(this.i).subscribe(c=>this.MyCourses=c)
+}
+HasMyCourse(id:number)
+{
+ return this.MyCourses?.find((c: Course) => c.id === id)!=null
 }
 addCourse(course:Course)
 {
   this.edit=true
 this.Course=course
- 
  }
  showPopUp=false
  coursePopUp:number=0;
  textShow=" "
- funcPopup:() => void = () => {}
+ funcPopup:()=>void = () => {}
  ToPopUp(id:number,s:string,b:number)
  {
    this.showPopUp=true;
@@ -70,24 +82,41 @@ this.Course=course
     this.showPopUp=false;
     this.apiCourse.deleteCourse(this.coursePopUp.toString());
   }
-  joinToCourse(){
-    this.showPopUp=false;
-    this.apiCourse.enrollStudent(this.coursePopUp,this.i).subscribe(res=>{
-      if(res.status===200) 
-        alert('יופי שהצטרפת')
+  joinToCourse() {
+    this.showPopUp = false;
+    this.apiCourse.enrollStudent(this.coursePopUp, this.i).subscribe(
+        res => {
+            console.log(res + " the res from server");
+            
+                alert('יופי שהצטרפת');
+                // Optionally, you can update the UI to reflect the enrollment
+                this.toHome()
+        },
+        error => {
+            console.error('Enrollment error:', error);
+            alert("הינך רשום כבר לקורס זה");
+        }
+    );
+}
 
-      else
-      alert("הרישום נכשל")
-    });
-  }
-  leaveCourse()
-  {
-    this.showPopUp=false;
-    this.apiCourse.unEnrollStudent(this.coursePopUp,this.i).subscribe(res=>{
-      if(res.status===404) 
-        alert("אינך רשום לקורס זה")
-      else
-      alert('עזבת וחבל')
-    });
-  }
+leaveCourse() {
+    this.showPopUp = false;
+    this.apiCourse.unEnrollStudent(this.coursePopUp, this.i).subscribe(
+        res => {
+            // Assuming 200 is the success status for leaving a course
+                alert('עזבת וחבל');
+                // Optionally, you can update the UI to reflect the un-enrollment
+                this.toHome()
+                
+        },
+        error => {
+            console.error('Unenrollment error:', error);
+            alert("עזיבת הקורס נכשלה, שגיאה: " + "אינך רשום לקורס זה");
+        }
+    );
+}
+toHome()
+{
+  this.router.navigate(['/home']);
+}
 }

@@ -54,25 +54,31 @@ export class CoursesServiceService implements OnInit {
   enrollStudent(courseId: number, userId: number): Observable<any> {
     const token = localStorage.getItem('Token'); // Retrieve the token from local storage
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
     });
 
     const body = {
-      userId: userId
+        userId: userId
     };
 
     return this.http.post(`${this.baseUrl}/${courseId}/enroll`, body, { headers });
-  }
-  unEnrollStudent(courseId: number, userId: number): Observable<any> {
+}
+
+unEnrollStudent(courseId: number, userId: number): Observable<any> {
     const token = localStorage.getItem('Token'); // Retrieve the token from local storage
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
     });
 
-    const body = {
-      userId: userId      
-    };
-
-    return this.http.post(`${this.baseUrl}/${courseId}/unenroll`, body, { headers });
+    // For un-enrollment, it's better to use DELETE
+    return this.http.delete(`${this.baseUrl}/${courseId}/unenroll`, { headers, body: { userId: userId } });
+}
+getCoursesByUserId(userId: number): Observable<Course[]> {
+  const token = localStorage.getItem('Token'); // Retrieve the token from local storage
+  const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
   }
-  }
+  );
+  return this.http.get<Course[]>(`${this.baseUrl}/student/${userId}`, { headers });
+}
+}

@@ -2,12 +2,13 @@
 {
 <app-button-toenter text="Login" (buttonClick)="ToLogin()"></app-button-toenter>
 <app-button-toenter text="Register" (buttonClick)="ToRegister()"></app-button-toenter>
-@if(login==true)
-{
-<app-button-log></app-button-log>
-} 
- @if(register==true)
-{<app-button-register></app-button-register>}}
+  @if(login==true)
+  {
+    <app-button-log></app-button-log>
+  } 
+  @else if(register==true)
+   {<app-button-register></app-button-register>}
+   }
 @else{
 <app-navbar></app-navbar>
 }
