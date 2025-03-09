@@ -117,6 +117,6 @@ leaveCourse() {
 }
 toHome()
 {
-  this.router.navigate(['/home']);
+  this.router.navigate(['/']);
 }
 }
