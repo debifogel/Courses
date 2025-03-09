@@ -2,13 +2,12 @@ import { Component } from '@angular/core';
 import { ButtonToenterComponent } from '../../ButtonToenter/button-toenter/button-toenter.component';
 import { ButtonLogComponent } from "../../ButtonLog/button-log/button-log.component";
 import { ButtonRegisterComponent } from "../../ButtonRegister/button-register/button-register.component";
-import { NavbarComponent } from "../../Navbar/navbar/navbar.component";
 import { UserService } from '../../../Service/User/user.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ButtonToenterComponent, ButtonLogComponent, ButtonRegisterComponent, NavbarComponent],
+  imports: [ButtonToenterComponent, ButtonLogComponent, ButtonRegisterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

@@ -5,7 +5,7 @@ import { LonlyCourseFormComponent } from '../Components/LonlyCourseForm/lonly-co
 
 
 export const routes: Routes = [
-    {path:"home",component:HomeComponent },
+    {path:"",component:HomeComponent },
     {path:"the_courses", component: CoursesComponent},   
     { path: 'course/:id', component: LonlyCourseFormComponent }
     
